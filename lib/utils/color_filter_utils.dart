@@ -85,9 +85,9 @@ RGBA brightness(RGBA color, num adj) {
   adj = (adj < -1) ? -1 : adj;
   adj = ~~(255 * adj).round();
   return new RGBA(
-      red: clampPixel(color.red + adj),
-      green: clampPixel(color.green + adj),
-      blue: clampPixel(color.blue + adj),
+      red: clampPixel((color.red + adj).toInt()),
+      green: clampPixel((color.green + adj).toInt()),
+      blue: clampPixel((color.blue + adj).toInt()),
       alpha: color.alpha);
 }
 
@@ -97,9 +97,9 @@ RGBA hueSaturation(RGBA color, num adj) {
   hsv[1] *= adj;
   var rgb = imageUtils.hsvToRgb(hsv[0], hsv[1], hsv[2]);
   return new RGBA(
-    red: clampPixel(rgb[0]),
-    green: clampPixel(rgb[1]),
-    blue: clampPixel(rgb[2]),
+    red: clampPixel(rgb[0].toInt()),
+    green: clampPixel(rgb[1].toInt()),
+    blue: clampPixel(rgb[2].toInt()),
     alpha: color.alpha,
   );
 }

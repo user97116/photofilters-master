@@ -13,7 +13,7 @@ List<num> rgbToHsv(num r, num g, num b) {
     r,
     max(g, b),
   );
-  num h, s, v = _max;
+  num h = 0, s, v = _max;
 
   num d = _max - _min;
   s = _max == 0 ? 0 : d / _max;
@@ -36,13 +36,13 @@ List<num> rgbToHsv(num r, num g, num b) {
 }
 
 List<num> hsvToRgb(num h, num s, num v) {
-  int r, g, b;
+  num r = 0, g = 0, b = 0;
 
   int i = (h * 6).floor();
-  int f = h * 6 - i;
-  int p = v * (1 - s);
-  int q = v * (1 - f * s);
-  int t = v * (1 - (1 - f) * s);
+  num f = h * 6 - i;
+  num p = v * (1 - s);
+  num q = v * (1 - f * s);
+  num t = v * (1 - (1 - f) * s);
 
   switch (i % 6) {
     case 0:

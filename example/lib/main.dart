@@ -15,21 +15,22 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String fileName;
+  late String fileName;
   List<Filter> filters = presetFiltersList;
-  File imageFile;
+  XFile? imageFile;
 
   Future getImage(context) async {
-    imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
-    fileName = basename(imageFile.path);
-    var image = imageLib.decodeImage(imageFile.readAsBytesSync());
-    image = imageLib.copyResize(image, width: 600);
+    imageFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    fileName = basename(imageFile!.path);
+    var data = await imageFile!.readAsBytes();
+    var image = imageLib.decodeImage(data);
+    image = imageLib.copyResize(image!, width: 600);
     Map imagefile = await Navigator.push(
       context,
       new MaterialPageRoute(
         builder: (context) => new PhotoFilterSelector(
           title: Text("Photo Filter Example"),
-          image: image,
+          image: image!,
           filters: presetFiltersList,
           filename: fileName,
           loader: Center(child: CircularProgressIndicator()),
@@ -37,11 +38,11 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
-    if (imagefile != null && imagefile.containsKey('image_filtered')) {
+    if (imagefile.containsKey('image_filtered')) {
       setState(() {
         imageFile = imagefile['image_filtered'];
       });
-      print(imageFile.path);
+      print(imageFile!.path);
     }
   }
 
@@ -57,7 +58,7 @@ class _MyAppState extends State<MyApp> {
               ? Center(
                   child: new Text('No image selected.'),
                 )
-              : Image.file(imageFile),
+              : Image.file(File(imageFile!.path)),
         ),
       ),
       floatingActionButton: new FloatingActionButton(

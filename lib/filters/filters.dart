@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 ///The [Filter] class to define a Filter consists of multiple [SubFilter]s
 abstract class Filter extends Object {
-  final String name, nameHindi;
+  final String? name, nameHindi;
   Filter({this.name, this.nameHindi}) : assert(name != null);
 
   ///Apply the [SubFilter] to an Image.
